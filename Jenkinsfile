@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+environment {
+    PATH = "${env.PATH};C:\\Program Files\\Docker\\Docker\\resources\\bin"
+}
+
     stages {
         stage('Build') {
             steps {
@@ -30,3 +34,4 @@ pipeline {
         }
     }
 }
+
