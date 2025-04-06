@@ -8,7 +8,7 @@ environment {
     stages {
         stage('Build') {
             steps {
-                bat'docker build -t WorldOfGames .'
+                bat'docker build -t worldofgames .'
             }
         }
 
