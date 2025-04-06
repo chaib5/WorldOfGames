@@ -14,7 +14,7 @@ environment {
 
         stage('Run') {
             steps {
-                bat 'docker run -d -p 8777:5000 --name worldofgames_container -v $PWD/Scores.txt:/Scores.txt WorldOfGames'
+                bat 'docker run -d -p 8777:5000 --name worldofgames_container -v $PWD/Scores.txt:/Scores.txt worldofgames'
             }
         }
 
