@@ -1,14 +1,9 @@
 
+groovy
 pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/chaib5/WorldOfGames.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'docker build -t WorldOfGames .'
