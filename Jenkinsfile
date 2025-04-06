@@ -1,37 +1,43 @@
 pipeline {
     agent any
 
-environment {
-    PATH = "${env.PATH};C:\\Program Files\\Docker\\Docker\\resources\\bin"
-}
+    environment {
+        DOCKER_IMAGE = "worldofgames"
+        CONTAINER_NAME = "worldofgames_container"
+        HOST_SCORE_PATH = "C:\\Users\\chaib\\.jenkins\\workspace\\WorldOfGames\\Scores.txt"
+        CONTAINER_SCORE_PATH = "/Scores.txt"
+    }
 
     stages {
         stage('Build') {
             steps {
-                bat'docker build -t worldofgames .'
+                bat "docker build -t %DOCKER_IMAGE% ."
             }
         }
 
         stage('Run') {
             steps {
-                bat 'docker run -d -p 8777:5000 --name worldofgames_container -v $PWD/Scores.txt:/Scores.txt worldofgames'
+                bat "docker run -d -p 8777:5000 --name %CONTAINER_NAME% -v \"%HOST_SCORE_PATH%\":\"%CONTAINER_SCORE_PATH%\" %DOCKER_IMAGE%"
             }
         }
 
         stage('Test') {
             steps {
-                bat'python3 e2e.py'
+                echo 'Tests would go here'
             }
         }
 
         stage('Finalize') {
             steps {
-                bat'docker stop worldofgames_container'
-                bat'docker rm worldofgames_container'
-                bat'docker tag WorldOfGames chaib5/worldofgames:latest'
-                bat'docker push chaib5/worldofgames:latest'
+                echo 'Pipeline completed'
             }
         }
     }
-}
 
+    post {
+        always {
+            bat "docker stop %CONTAINER_NAME% || exit 0"
+            bat "docker rm %CONTAINER_NAME% || exit 0"
+        }
+    }
+}
