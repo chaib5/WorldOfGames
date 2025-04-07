@@ -8,6 +8,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+		bat 'where docker'
                 bat 'docker build -t worldofgames .'
             }
         }
