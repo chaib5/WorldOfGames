@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     environment {
+
+        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         SCORE_FILE = "C:/Users/chaib/WorldOfGames/Scores.txt"
     }
 
