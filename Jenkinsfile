@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Windows\\System32;${env.PATH}"
-        SCORE_FILE = "C:/Users/chaib/WorldOfGames/Scores.txt"
+        SCORE_FILE = "/c/Users/chaib/WorldOfGames/Scores.txt"
     }
 
     stages {
