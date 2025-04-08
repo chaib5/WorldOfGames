@@ -22,7 +22,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'curl http://localhost:8777'
+             bat 'timeout /t 5 > NUL'
+            bat 'curl http://localhost:8777'
             }
         }
     }
