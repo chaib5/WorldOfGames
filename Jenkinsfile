@@ -2,28 +2,31 @@ pipeline {
     agent any
 
     environment {
-        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Windows\\System32;${env.PATH}"
         SCORE_FILE = "/c/Users/chaib/WorldOfGames/Scores.txt"
     }
 
     stages {
         stage('Build') {
             steps {
-                bat 'where docker'
                 bat 'docker build -t worldofgames .'
             }
         }
 
         stage('Run') {
             steps {
-                bat 'docker run -d -p 8777:5000 --name worldofgames_container -v "%SCORE_FILE%":/Scores.txt worldofgames'
+                // Stop + Remove existing container if it exists
+                bat 'docker stop test_wog_container || exit 0'
+                bat 'docker rm test_wog_container || exit 0'
+
+                // Run new container
+                bat 'docker run -d -p 8777:5000 --name test_wog_container -v "%SCORE_FILE%":/Scores.txt worldofgames'
             }
         }
 
         stage('Test') {
             steps {
-             bat 'timeout /t 5 > NUL'
-            bat 'curl http://localhost:8777'
+                bat 'timeout /t 5 > NUL'  // Laisse à Flask le temps de démarrer
+                bat 'curl http://localhost:8777'
             }
         }
     }
@@ -31,8 +34,8 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            bat 'docker stop worldofgames_container || exit 0'
-            bat 'docker rm worldofgames_container || exit 0'
+            bat 'docker stop test_wog_container || exit 0'
+            bat 'docker rm test_wog_container || exit 0'
         }
     }
 }
