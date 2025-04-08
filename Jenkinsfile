@@ -6,13 +6,6 @@ pipeline {
         SCORE_FILE = "C:/Users/chaib/WorldOfGames/Scores.txt"
     }
 
-    stage('Test Docker') {
-         steps {
-             bat 'docker --version'
-             bat 'docker ps'
-         }
-     }
-
     stages {
         stage('Build') {
             steps {
