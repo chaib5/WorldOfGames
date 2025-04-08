@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         SCORE_FILE = "C:/Users/chaib/WorldOfGames/Scores.txt"
     }
@@ -10,7 +9,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-		bat 'where docker'
+                bat 'where docker'
                 bat 'docker build -t worldofgames .'
             }
         }
